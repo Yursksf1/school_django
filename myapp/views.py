@@ -8,20 +8,35 @@ from .models import Subject, Student
 def subject(request):
     subjects = Subject.objects.all()
     response = ''
-    for subject in subjects:
+    for subject in subjets:
         print(subject.name)
         response = response + ' ' + subject.name
 
-    print('estoy llamando al index')
     return HttpResponse(response)
 
 
 def students(request):
+    response = get_students()
+    return JsonResponse(response)
+
+
+def index(request):
+    students = get_students()
+    context = {
+        'message': 'hola mundo',
+        'students': students
+
+    }
+
+    return render(request, 'home.html', context)
+
+
+def get_students():
     students = Student.objects.all()
-    response = {}
+    response = []
     for student in students:
-        print(student.first_name, student.last_name)
-        response[student.id] = {
+        # print(student.first_name, student.last_name)
+        student_response = {
             'full name': '{} {}'.format(student.first_name, student.last_name),
         }
         enrollments = student.enrollment_set.all()
@@ -43,14 +58,8 @@ def students(request):
                     }
                 )
 
-        response[student.id]['enrollments'] = student_enrollment
+        student_response['enrollments'] = student_enrollment
+        response.append(student_response)
 
-    return JsonResponse(response)
-
-
-def index(request):
-    context = {
-        'message': 'hola mundo'
-    }
-
-    return render(request, 'home.html', context)
+    response = {'students': response}
+    return response
