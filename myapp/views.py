@@ -46,3 +46,11 @@ def students(request):
         response[student.id]['enrollments'] = student_enrollment
 
     return JsonResponse(response)
+
+
+def index(request):
+    context = {
+        'message': 'hola mundo'
+    }
+
+    return render(request, 'home.html', context)
