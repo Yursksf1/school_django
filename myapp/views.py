@@ -8,7 +8,7 @@ from .models import Subject, Student
 def subject(request):
     subjects = Subject.objects.all()
     response = ''
-    for subject in subjets:
+    for subject in subjects:
         print(subject.name)
         response = response + ' ' + subject.name
 
@@ -23,10 +23,9 @@ def students(request):
 def index(request):
     students = get_students()
     context = {
-        'message': 'hola mundo',
-        'students': students
-
+        'message': 'hola mundo'
     }
+    context.update(students)
 
     return render(request, 'home.html', context)
 

@@ -10,13 +10,13 @@
           border-collapse: collapse;
           width: 100%;
         }
-        
+
         td, th {
           border: 1px solid #dddddd;
           text-align: left;
           padding: 8px;
         }
-        
+
         tr:nth-child(even) {
           background-color: #dddddd;
         }
@@ -24,7 +24,7 @@
 </head>
 <body>
     <h2>Lista Resultados</h2>
-    
+
     <table>
       <tr>
         <th>Name</th>
@@ -32,12 +32,17 @@
         <th>Subject</th>
         <th>Note</th>
     </tr>
-    <tr>
-        <td>Bart</td>
-        <td>Edna</td>
-        <td>Math</td>
-        <td>5</td>
-    </tr>
+
+    {% for sudent in students %}
+        {% for enrollment in students.enrollments %}
+            <tr>
+                <td>{{ sudent.full_name }}</td>
+                <td>Edna</td>
+                <td>{{ enrollment.name }}</td>
+                <td>{{ enrollment.average }}</td>
+            </tr>
+        {% endfor %}
+    {% endfor %}
 
 </body>
 </html>
